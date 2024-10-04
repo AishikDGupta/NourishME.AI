@@ -574,6 +574,7 @@ Foot Placement: Position feet slightly wider than shoulder-width, toes pointed s
 Heel Stability: Keep heels grounded throughout the movement for better balance and power.
 You burnt about 150 calories doing this """
             with st.spinner("Analyzing the video"):
+             time.sleep(4)
              response = st.session_state.chat_session2.send_message([f"""here is a sample of how you can answer {prompt}
 to any question , answer like that . suppose the user has selected {abc} . use common sense to identify where he moight be wrong for example 
 use certain ponts unnique to the exercise and pouint them out . dont write that **you dont know / you havent recieced the video**"""])
@@ -586,8 +587,9 @@ use certain ponts unnique to the exercise and pouint them out . dont write that 
                 st.chat_message("user").markdown(input)
                 st.session_state.chat_history2.append({"role": "user", "content": input})
                 with st.spinner("Analyzing questions"):
+                 time.sleep(3)
                  response2 = st.session_state.chat_session2.send_message([input])
-                st.write(response2.text)
+                st.markdown(response2.text)
                 st.session_state.chat_history2.append({"role": "assistant", "content": response2.text})
     elif choice == "SmartBand ⌚️✨":
       st.text_input("modelNo","NM.AI-x234frg")
