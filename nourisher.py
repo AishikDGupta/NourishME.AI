@@ -548,12 +548,11 @@ elif label == "🏠 Home":
     response.text,
 )
                 with st.spinner("calories burnt"):
-                    abc = model.generate_content(f"just wwrite and generate the estimated calories burnt in 
+                    abc = model.generate_content(f"""just wwrite and generate the estimated calories burnt in 
                                                  the workout {response.text} the user's parameters are             st.session_state.age = present_date.year - st.session_state.birth_date.year - ((present_date.month, present_date.day) < (st.session_state.birth_date.month, st.session_state.birth_date.day))
            {st.session_state.height} HEIGHT
             {st.session_state.weight} WEIgHT and age of {st.session_state.age} .Provide estimate of calories burnt on the basis of the time given . give rbitrary number if possible but
-            dont mention it in the response
-                                                 ")
+            dont mention it in the response """)
                     stoggle(
     "Calories Burnt",
     abc.text,
