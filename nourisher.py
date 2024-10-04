@@ -255,7 +255,7 @@ if 'height' not in st.session_state:
     st.session_state.height = None
 if 'email' not in st.session_state:
    st.session_state.email = None
-if "password" not in st.session:
+if "password" not in st.session_state:
    st.session_state.password = None
 def translate_role_for_streamlit(user_role):
          if user_role == "model":
