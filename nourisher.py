@@ -328,7 +328,7 @@ if label == '⚙️ Settings':
     st.title("Settings")
     mode = option_menu(" ", ["Customized Details", "Account status","Payments"], 
                        icons=['person-lines-fill', 'shield-check','credit-card'], menu_icon="list", 
-                       default_index=0,orientation="horizontal")
+                       default_index=1,orientation="horizontal")
 
     if mode == "Customized Details":
         # Settings form
