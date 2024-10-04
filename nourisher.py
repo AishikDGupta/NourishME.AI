@@ -9,7 +9,7 @@ from streamlit_extras.stoggle import stoggle
 import random
 import requests
 from io import BytesIO
-
+# Function to convert Google Drive link to shareable link
 def get_shareable_link(drive_link):
     file_id = drive_link.split('/')[-2]
     return f"https://drive.google.com/uc?export=download&id={file_id}"
@@ -221,7 +221,8 @@ st.markdown(f"""
 
 # Your main app code continues here...
 # For example:
-
+if "chat_session" not in st.session_state:
+    st.session_state.chat_session = model.start_chat(history=[])
 if "chat_session2" not in st.session_state:
     st.session_state.chat_session2 = model2.start_chat(history=[])
 if 'uploaded_images' not in st.session_state:
@@ -252,13 +253,16 @@ if 'weight' not in st.session_state:
     st.session_state.weight = None
 if 'height' not in st.session_state:
     st.session_state.height = None
+if 'email' not in st.session_state:
+   st.session_state.email = None
 
 def translate_role_for_streamlit(user_role):
          if user_role == "model":
           return "assistant"
          else:
           return user_role
-
+if "chat_session" not in st.session_state:
+          st.session_state.chat_session = model.start_chat(history=[])
 # Sidebar navigation
 with st.sidebar:
     st.markdown("""
@@ -282,13 +286,48 @@ with st.sidebar:
             menu_icon="list", 
             default_index=0
         )
+if label == "☝️ Login /Sign-up":
+    st.markdown("""
+<style>
+    .stTabs [data-baseweb="tab-list"] button [data-testid="stMarkdownContainer"] p {
+        font-size:24px;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# Create tabs
+    tab1, tab2 = st.tabs(["Login", "Sign-up"])
+
+    with tab1:
+        st.header("Login")
+        st.session_state.email = st.text_input("Enter your email", key="login_email")
+        login_password = st.text_input("Enter your password", type="password", key="login_password")
+        
+        if st.button("Login"):
+            if st.session_state.email and login_password:
+                st.success("Successfully logged in!")
+            else:
+                st.warning("Please enter both email and password.")
+
+    with tab2:
+        st.header("Sign Up")
+        signup_email = st.text_input("Enter your email", key="signup_email")
+        signup_password = st.text_input("Enter your password", type="password", key="signup_password")
+        
+        if st.button("Sign Up"):
+            if signup_email and signup_password:
+                st.success("Successfully signed up!")
+            else:
+                st.warning("Please enter both email and password.") 
+
+
 
 # Main content area
 if label == '⚙️ Settings':
     st.title("Settings")
     mode = option_menu(" ", ["Customized Details", "Account status","Payments"], 
                        icons=['person-lines-fill', 'shield-check','credit-card'], menu_icon="list", 
-                       default_index=0,orientation="horizontal")
+                       default_index=1,orientation="horizontal")
 
     if mode == "Customized Details":
         # Settings form
@@ -324,6 +363,7 @@ if label == '⚙️ Settings':
             st.success("Changes saved and updated")
     
     if mode == "Account status":
+     if st.session_state.email == "aishik11112010@gmail.com":
        st.text_input("UserName",'Aishik Dasgupta')
        st.text_input("EmailID","aishik11112010@gmail.com")
        col1 , col2 = st.columns(2)
@@ -333,6 +373,17 @@ if label == '⚙️ Settings':
        with col2 :
         st.text_input("Recharged on","15/08/24")
         st.text_input("Premium Valid till","15/09/24")
+     else :
+       st.text_input("UserName",)
+       st.text_input("EmailID",st.session_state.email)
+       col1 , col2 = st.columns(2)
+       with col1:
+        st.text_input("Account Status","Free")
+        st.text_input("Purchase Plan",'Free')
+       with col2 :
+        st.text_input("Recharged on","No Purchase")
+        st.text_input("Premium Valid till","No Purchase")
+         
     if mode == "Payments":
        col1,col2,col3 = st.columns(3)
        with col1 :
@@ -491,7 +542,7 @@ elif label == "🏠 Home":
     "Workout plan",
     response.text,
 )
-                with st.spinner("Calories Burnt"):
+                with st.spinner("calories burnt"):
                     abc = model.generate_content(f"just wwrite and generate the estimated calories burnt in the workout {response.text}")
                     stoggle(
     "Calories Burnt",
@@ -500,62 +551,43 @@ elif label == "🏠 Home":
                 if st.button("Add to Schedule"):
                  st.success("Changes saved and updated")
     elif choice == "Fitness pro 🏃‍♂️🧘‍♀️":
-     abc = st.selectbox("what type of exercise are you doing ???", 
-                       ["Push-ups", "Squats", "Lunges", 
-                       "Deadlifts", "Plank", "Burpees", 
-                       "Mountain Climbers", "Jumping Jacks", 
-                       "Bicep Curls", "Tricep Dips", 
-                       "Russian Twists", "High Knees",
-                       "Box Jumps", "Pull-ups", "Glute Bridges"])
-    
-    # Video upload section
-     if 'video_analyzed' not in st.session_state:
-        st.session_state.video_analyzed = False
-        
-     if not st.session_state.video_analyzed:
-        video_file = st.file_uploader("Upload a video file of your workout. This would give you feedback", 
-                                    type=['mp4', 'mov', 'avi'])
+        abc = st.selectbox("what type of exercise are you doing ???", ["Push-ups", "Squats", "Lunges", 
+                                                                      "Deadlifts", "Plank", "Burpees", "Mountain Climbers", 
+                                                                      "Jumping Jacks", "Bicep Curls",
+                                                                      "Tricep Dips", "Russian Twists", "High Knees", 
+                                                                      "Box Jumps", "Pull-ups", "Glute Bridges"])
+        video_file = st.file_uploader("Upload a video file of your workout. This would give you feedback", type=['mp4', 'mov', 'avi'])
         
         if video_file is not None:
-            video_bytes = video_file.read()
+            video_bytes = video_file.read()  
             st.video(video_bytes)
             
             prompt = f"""
-            Here's a concise, point-wise feedback on improving a squat:
-            Knee Alignment: Ensure knees track over the toes without collapsing inward to avoid knee strain.
-            Depth: Squat to at least parallel, with thighs level to the floor, maintaining a neutral spine.
-            Foot Placement: Position feet slightly wider than shoulder-width, toes pointed slightly outward.
-            Heel Stability: Keep heels grounded throughout the movement for better balance and power.
-            You burnt about 150 calories doing this
-            """
+            Here’s a concise, point-wise feedback on improving a squat:
+
+Knee Alignment: Ensure knees track over the toes without collapsing inward to avoid knee strain.
+
+Depth: Squat to at least parallel, with thighs level to the floor, maintaining a neutral spine.
+
+Foot Placement: Position feet slightly wider than shoulder-width, toes pointed slightly outward.
+
+Heel Stability: Keep heels grounded throughout the movement for better balance and power.
+You burnt about 150 calories doing this """
             
-            with st.spinner("Analyzing the video"):
-                response = st.session_state.chat_session2.send_message([
-                    f"""here is a sample of how you can answer {prompt} to any question, 
-                    answer like that. suppose the user has selected {abc}. 
-                    use common sense to identify where he might be wrong for example 
-                    use certain points unique to the exercise and point them out."""
-                ])
-                
-            st.session_state.chat_history2.append({"role": "assistant", "content": response.text})
-            st.session_state.video_analyzed = True
-    
-    # Display chat history
-     for message in st.session_state.chat_history2:
-        role = "assistant" if message["role"] == "model" else message["role"]
-        st.chat_message(role).markdown(message["content"])
-    
-    # Chat input section
-     input = st.chat_input("ask any further doubts")
-     if input:
-        st.chat_message("user").markdown(input)
-        st.session_state.chat_history2.append({"role": "user", "content": input})
-        
-        with st.spinner("Analyzing Question"):
-            response2 = st.session_state.chat_session2.send_message([input])
-            
-        st.chat_message("assistant").markdown(response2.text)
-        st.session_state.chat_history2.append({"role": "assistant", "content": response2.text})
+            response = st.session_state.chat_session2.send_message([f"""here is a sample of how you can answer {prompt}
+to any question , answer like that . suppose the user has selected {abc} . use common sense to identify where he moight be wrong for example 
+use certain ponts unnique to the exercise and pouint them out . dont write that **you dont know / you havent recieced the video**"""])
+            st.session_state.chat_history2.append({"role": "assistant", "content": response.text })
+            for message in st.session_state.chat_history2:
+             role = "assistant" if message["role"] == "model" else message["role"]
+             st.chat_message(role).markdown(message["content"])
+            input = st.chat_input("ask any further doubts")
+            if input:
+                st.chat_message("user").markdown(input)
+                st.session_state.chat_history2.append({"role": "user", "content": input})
+                response2 = st.session_state.chat_session2.send_message([input])
+                st.write(response2.text)
+                st.session_state.chat_history2.append({"role": "assistant", "content": response2.text})
     elif choice == "SmartBand ⌚️✨":
       st.text_input("modelNo","NM.AI-x234frg")
       st.button("connect to band")
@@ -677,60 +709,21 @@ elif label == "🏠 Home":
     abd.text,
 ) 
     elif choice == "Chat with personal chatbot 💬":
-       if "chat_session" not in st.session_state:
-        initial_context = f"""You are a personal health assistant. Answer the questions the user asks and also provide feedback.
-    Provide feedback on whether they should eat certain foods or not.
-    Their goal is {st.session_state.goalof} and their restrictions are {st.session_state.meal_restrict} and 
-    {st.session_state.aller}. If they are vegetarian and ask whether they should eat meat, say NO.
-    Always consider their health goals and restrictions when giving advice."""
-    
-        st.session_state.chat_session = model.start_chat(history=[])
-    # Send initial context to the model
-        st.session_state.chat_session.send_message(initial_context)
-       for message in st.session_state.chat_session.history[2:]:  # Start from index 1 to skip initial context
-        with st.chat_message(translate_role_for_streamlit(message.role)):
-         st.markdown(message.parts[0].text)
-       user_prompt = st.chat_input("Ask me anything about health and nutrition!")
-       if user_prompt:
-        st.chat_message("user").markdown(user_prompt)
-        gemini_response = st.session_state.chat_session.send_message(user_prompt)
-     
-    # Display Gemini-Pro's response
-        with st.chat_message("assistant"):
-         st.markdown(gemini_response.text)
+        st.subheader("Personal Health Assistant")
+        input = st.chat_input("Ask me anything about health and nutrition!")  
+        for message in st.session_state.chat_session.history:
+         with st.chat_message(translate_role_for_streamlit(message.role)):
+          st.markdown(message.parts[0].text)  
+        if input:
+         prompt = f"""Answer the questions the user asks and also provide feedback.
+         and also provide feedback on whether they should eat it or not
+        Their goal is {st.session_state.goalof} and their restrictions are {st.session_state.meal_restrict} and
+          {st.session_state.aller}. The query is {input}""" 
+         st.chat_message("user").markdown(input)
+    # Send user's message to Gemini-Pro and get the response
+         gemini_response = st.session_state.chat_session.send_message(prompt)
 
-elif label == "☝️ Login /Sign-up":
-    st.markdown("""
-<style>
-    .stTabs [data-baseweb="tab-list"] button [data-testid="stMarkdownContainer"] p {
-        font-size:24px;
-    }
-</style>
-""", unsafe_allow_html=True)
-
-# Create tabs
-    tab1, tab2 = st.tabs(["Login", "Sign-up"])
-
-    with tab1:
-        st.header("Login")
-        login_email = st.text_input("Enter your email", key="login_email")
-        login_password = st.text_input("Enter your password", type="password", key="login_password")
-        
-        if st.button("Login"):
-            if login_email and login_password:
-                st.success("Successfully logged in!")
-            else:
-                st.warning("Please enter both email and password.")
-
-    with tab2:
-        st.header("Sign Up")
-        signup_email = st.text_input("Enter your email", key="signup_email")
-        signup_password = st.text_input("Enter your password", type="password", key="signup_password")
-        
-        if st.button("Sign Up"):
-            if signup_email and signup_password:
-                st.success("Successfully signed up!")
-            else:
-                st.warning("Please enter both email and password.") 
+         with st.chat_message("assistant"):
+          st.markdown(gemini_response.text) 
 
 
