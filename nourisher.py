@@ -467,7 +467,12 @@ elif label == "🏠 Home":
              ) 
 
             with st.spinner("Personalized Results"):
-             j = model.generate_content(f"""the  is {response.text} .explain to users why it is useful for them 
+             j = model.generate_content(f"""the  is {response.text} .explain to users why it is
+                                        useful for them explain why the recipee is good for them..their 
+                                        needs are {','.join(st.session_state.aller) if st.session_state.aller  else 'no'} 
+                  {','.join(allergies) if allergies  else 'no'} allergies.
+                Follow {','.join( st.session_state.meal_restrict ) if  st.session_state.meal_restrict else 'no'}
+                 {','.join( restrictions ) if restrictions else 'no'}  dietary restrictions
              """)
              stoggle(
     "Why this is good for you",
@@ -543,7 +548,12 @@ elif label == "🏠 Home":
     response.text,
 )
                 with st.spinner("calories burnt"):
-                    abc = model.generate_content(f"just wwrite and generate the estimated calories burnt in the workout {response.text}")
+                    abc = model.generate_content(f"just wwrite and generate the estimated calories burnt in 
+                                                 the workout {response.text} the user's parameters are             st.session_state.age = present_date.year - st.session_state.birth_date.year - ((present_date.month, present_date.day) < (st.session_state.birth_date.month, st.session_state.birth_date.day))
+           {st.session_state.height} HEIGHT
+            {st.session_state.weight} WEIgHT and age of {st.session_state.age} .Provide estimate of calories burnt on the basis of the time given . give rbitrary number if possible but
+            dont mention it in the response
+                                                 ")
                     stoggle(
     "Calories Burnt",
     abc.text,
