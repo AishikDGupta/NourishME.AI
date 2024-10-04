@@ -254,8 +254,9 @@ if 'weight' not in st.session_state:
 if 'height' not in st.session_state:
     st.session_state.height = None
 if 'email' not in st.session_state:
-   st.session_state.email = None
-
+   st.session_state.email == None
+if "password" not in st.session:
+   st.session_state.password == None
 def translate_role_for_streamlit(user_role):
          if user_role == "model":
           return "assistant"
@@ -300,11 +301,11 @@ if label == "☝️ Login /Sign-up":
 
     with tab1:
         st.header("Login")
-        st.session_state.email = st.text_input("Enter your email", key="login_email")
+        login_email = st.text_input("Enter your email", key="login_email")
         login_password = st.text_input("Enter your password", type="password", key="login_password")
         
         if st.button("Login"):
-            if st.session_state.email and login_password:
+            if login_email and login_password:
                 st.success("Successfully logged in!")
             else:
                 st.warning("Please enter both email and password.")
@@ -327,7 +328,7 @@ if label == '⚙️ Settings':
     st.title("Settings")
     mode = option_menu(" ", ["Customized Details", "Account status","Payments"], 
                        icons=['person-lines-fill', 'shield-check','credit-card'], menu_icon="list", 
-                       default_index=1,orientation="horizontal")
+                       default_index=0,orientation="horizontal")
 
     if mode == "Customized Details":
         # Settings form
@@ -363,7 +364,6 @@ if label == '⚙️ Settings':
             st.success("Changes saved and updated")
     
     if mode == "Account status":
-     if st.session_state.email == "aishik11112010@gmail.com":
        st.text_input("UserName",'Aishik Dasgupta')
        st.text_input("EmailID","aishik11112010@gmail.com")
        col1 , col2 = st.columns(2)
@@ -373,17 +373,6 @@ if label == '⚙️ Settings':
        with col2 :
         st.text_input("Recharged on","15/08/24")
         st.text_input("Premium Valid till","15/09/24")
-     else :
-       st.text_input("UserName",)
-       st.text_input("EmailID",st.session_state.email)
-       col1 , col2 = st.columns(2)
-       with col1:
-        st.text_input("Account Status","Free")
-        st.text_input("Purchase Plan",'Free')
-       with col2 :
-        st.text_input("Recharged on","No Purchase")
-        st.text_input("Premium Valid till","No Purchase")
-         
     if mode == "Payments":
        col1,col2,col3 = st.columns(3)
        with col1 :
@@ -467,12 +456,7 @@ elif label == "🏠 Home":
              ) 
 
             with st.spinner("Personalized Results"):
-             j = model.generate_content(f"""the  is {response.text} .explain to users why it is
-                                        useful for them explain why the recipee is good for them..their 
-                                        needs are {','.join(st.session_state.aller) if st.session_state.aller  else 'no'} 
-                  {','.join(allergies) if allergies  else 'no'} allergies.
-                Follow {','.join( st.session_state.meal_restrict ) if  st.session_state.meal_restrict else 'no'}
-                 {','.join( restrictions ) if restrictions else 'no'}  dietary restrictions
+             j = model.generate_content(f"""the  is {response.text} .explain to users why it is useful for them 
              """)
              stoggle(
     "Why this is good for you",
@@ -548,11 +532,7 @@ elif label == "🏠 Home":
     response.text,
 )
                 with st.spinner("calories burnt"):
-                    abc = model.generate_content(f"""just wwrite and generate the estimated calories burnt in 
-                                                 the workout {response.text} the user's parameters are             st.session_state.age = present_date.year - st.session_state.birth_date.year - ((present_date.month, present_date.day) < (st.session_state.birth_date.month, st.session_state.birth_date.day))
-           {st.session_state.height} HEIGHT
-            {st.session_state.weight} WEIgHT and age of {st.session_state.age} .Provide estimate of calories burnt on the basis of the time given . give rbitrary number if possible but
-            dont mention it in the response """)
+                    abc = model.generate_content(f"just wwrite and generate the estimated calories burnt in the workout {response.text}")
                     stoggle(
     "Calories Burnt",
     abc.text,
@@ -582,8 +562,8 @@ Foot Placement: Position feet slightly wider than shoulder-width, toes pointed s
 
 Heel Stability: Keep heels grounded throughout the movement for better balance and power.
 You burnt about 150 calories doing this """
-            
-            response = st.session_state.chat_session2.send_message([f"""here is a sample of how you can answer {prompt}
+            with st.spinner("Analyzing the video"):
+             response = st.session_state.chat_session2.send_message([f"""here is a sample of how you can answer {prompt}
 to any question , answer like that . suppose the user has selected {abc} . use common sense to identify where he moight be wrong for example 
 use certain ponts unnique to the exercise and pouint them out . dont write that **you dont know / you havent recieced the video**"""])
             st.session_state.chat_history2.append({"role": "assistant", "content": response.text })
@@ -594,7 +574,8 @@ use certain ponts unnique to the exercise and pouint them out . dont write that 
             if input:
                 st.chat_message("user").markdown(input)
                 st.session_state.chat_history2.append({"role": "user", "content": input})
-                response2 = st.session_state.chat_session2.send_message([input])
+                with st.spinner("Analyzing questions"):
+                 response2 = st.session_state.chat_session2.send_message([input])
                 st.write(response2.text)
                 st.session_state.chat_history2.append({"role": "assistant", "content": response2.text})
     elif choice == "SmartBand ⌚️✨":
@@ -734,5 +715,4 @@ use certain ponts unnique to the exercise and pouint them out . dont write that 
 
          with st.chat_message("assistant"):
           st.markdown(gemini_response.text) 
-
 
