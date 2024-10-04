@@ -551,6 +551,9 @@ elif label == "🏠 Home":
                 if st.button("Add to Schedule"):
                  st.success("Changes saved and updated")
     elif choice == "Fitness pro 🏃‍♂️🧘‍♀️":
+     if 'video_analyzed' not in st.session_state:
+        st.session_state.video_analyzed = False
+
      abc = st.selectbox("what type of exercise are you doing ???", ["Push-ups", "Squats", "Lunges", 
                                                                   "Deadlifts", "Plank", "Burpees", "Mountain Climbers", 
                                                                   "Jumping Jacks", "Bicep Curls",
@@ -558,7 +561,7 @@ elif label == "🏠 Home":
                                                                   "Box Jumps", "Pull-ups", "Glute Bridges"])
      video_file = st.file_uploader("Upload a video file of your workout. This would give you feedback", type=['mp4', 'mov', 'avi'])
     
-     if video_file is not None:
+     if video_file is not None and not st.session_state.video_analyzed:
         video_bytes = video_file.read()  
         st.video(video_bytes)
         
@@ -570,23 +573,27 @@ Foot Placement: Position feet slightly wider than shoulder-width, toes pointed s
 Heel Stability: Keep heels grounded throughout the movement for better balance and power.
 You burnt about 150 calories doing this """
         with st.spinner("Analyzing the video"):
-         time.sleep(4)
-         response = st.session_state.chat_session2.send_message([f"""here is a sample of how you can answer {prompt}
-to any question , answer like that . suppose the user has selected {abc} . use common sense to identify where he moight be wrong for example 
-use certain ponts unnique to the exercise and pouint them out . dont write that **you dont know / you havent recieced the video**"""])
-        st.session_state.chat_history2.append({"role": "assistant", "content": response.text })
+            time.sleep(4)
+            response = st.session_state.chat_session2.send_message([f"""here is a sample of how you can answer {prompt}
+to any question , answer like that . suppose the user has selected {abc} . use common sense to identify where he might be wrong for example 
+use certain points unique to the exercise and point them out . dont write that **you dont know / you havent received the video**"""])
+        st.session_state.chat_history2.append({"role": "assistant", "content": response.text})
+        st.session_state.video_analyzed = True
+    
+     if st.session_state.video_analyzed:
         for message in st.session_state.chat_history2:
-         role = "assistant" if message["role"] == "model" else message["role"]
-         st.chat_message(role).markdown(message["content"])
-        input = st.chat_input("ask any further doubts")
-        if input:
-         st.chat_message("user").markdown(input)
-         st.session_state.chat_history2.append({"role": "user", "content": input})
-         with st.spinner("Analyzing questions"):
-          time.sleep(3)
-          response2 = st.session_state.chat_session2.send_message([input])
-         st.chat_message("assistant").markdown(response2.text)
-         st.session_state.chat_history2.append({"role": "assistant", "content": response2.text})
+            role = "assistant" if message["role"] == "model" else message["role"]
+            st.chat_message(role).markdown(message["content"])
+    
+     input = st.chat_input("ask any further doubts")
+     if input:
+        st.chat_message("user").markdown(input)
+        st.session_state.chat_history2.append({"role": "user", "content": input})
+        with st.spinner("Analyzing questions"):
+            time.sleep(3)
+            response2 = st.session_state.chat_session2.send_message([input])
+        st.chat_message("assistant").markdown(response2.text)
+        st.session_state.chat_history2.append({"role": "assistant", "content": response2.text})
 
     elif choice == "SmartBand ⌚️✨":
       st.text_input("modelNo","NM.AI-x234frg")
