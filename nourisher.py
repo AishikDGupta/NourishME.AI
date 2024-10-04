@@ -254,9 +254,9 @@ if 'weight' not in st.session_state:
 if 'height' not in st.session_state:
     st.session_state.height = None
 if 'email' not in st.session_state:
-   st.session_state.email == None
+   st.session_state.email = None
 if "password" not in st.session:
-   st.session_state.password == None
+   st.session_state.password = None
 def translate_role_for_streamlit(user_role):
          if user_role == "model":
           return "assistant"
@@ -457,6 +457,10 @@ elif label == "🏠 Home":
 
             with st.spinner("Personalized Results"):
              j = model.generate_content(f"""the  is {response.text} .explain to users why it is useful for them 
+             Put emphasis on their needs the person's goal is {st.session_state.goalof} and he 
+                                            has allergies AND restrictions {st.session_state.aller} and
+                                              {st.session_state.meal_restrict
+} Emphasize why that ahould be eaten .
              """)
              stoggle(
     "Why this is good for you",
@@ -493,7 +497,12 @@ elif label == "🏠 Home":
              ) 
             with st.spinner("Personalized Results"):
              j = model.generate_content(f"""the meal plan is {response.text} .
-                                        explain to users why it is useful for them 
+                                        explain to users why it is useful for them .
+                                        Put emphasis on their needs the person
+                                            's goal is {st.session_state.goalof} and he 
+                                            has allergies AND restrictions {st.session_state.aller} and
+                                              {st.session_state.meal_restrict
+} Emphasize why that ahould be eaten .
              """)
              stoggle(
     "Why this is good for you",
@@ -532,7 +541,9 @@ elif label == "🏠 Home":
     response.text,
 )
                 with st.spinner("calories burnt"):
-                    abc = model.generate_content(f"just wwrite and generate the estimated calories burnt in the workout {response.text}")
+                    abc = model.generate_content(f"""just wwrite and generate the estimated calories burnt in the workout
+                    {response.text} and use user informaton {st.session_state.age} as AGE {st.session_state.height} cm in height 
+                    {st.session_state.weight} as weight""")
                     stoggle(
     "Calories Burnt",
     abc.text,
