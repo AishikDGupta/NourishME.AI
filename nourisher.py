@@ -257,7 +257,7 @@ if 'email' not in st.session_state:
    st.session_state.email = None
 if "password" not in st.session_state:
    st.session_state.password = None
-if "disease' not in st.session_state :
+if "disease" not in st.session_state :
     st.session_state.disease = None
 def translate_role_for_streamlit(user_role):
          if user_role == "model":
