@@ -353,7 +353,7 @@ if label == '⚙️ Settings':
             st.session_state.aller = st.multiselect("Allergies (if any)",
                                                    ["Peanuts", "Dairy", "Gluten", "Soy", "Shellfish", "None"])
             st.session_state.meal_restrict = st.multiselect("Dietary restrictions (if any)",
-                                                          ["Vegan", "Vegetarian", "Pescatarian", "Keto", "Paleo","No Restriction" ], [st.session_state.meal_restrict])
+                                                          ["Vegan", "Vegetarian", "Pescatarian", "Keto", "Paleo","No Restriction" ], ["No Restriction"])
             st.session_state.disease = st.multiselect('Any conditions/disease',[
     "Type 2 Diabetes",
     "Acid Reflux (GERD)",
