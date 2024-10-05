@@ -345,6 +345,16 @@ if label == '⚙️ Settings':
             st.session_state.age = present_date.year - st.session_state.birth_date.year - ((present_date.month, present_date.day) < (st.session_state.birth_date.month, st.session_state.birth_date.day))
             st.session_state.height = st.text_input("your height","172 cm")
             st.session_state.weight = st.text_input("your weight","58 kg")
+            st.subheader("Meal Preference")
+            st.session_state.mealpref = st.multiselect("Any Cuisine Prefernce",["North Indian", "South Indian",
+    "East Indian", "West Indian", "Punjabi", "Bengali",  "Gujarati", "Rajasthani", "Maharashtrian",  "Kerala", "Tamil Nadu",
+    "Hyderabadi","Chinese",'Korean','Japanese', "Italian",  "Mediterranean",
+    "Thai",
+    "Mexican", "French",
+    "Spanish",
+    "Vietnamese",
+    "Middle Eastern",
+    "Korean"])
 
         with col2:
             st.subheader("Health Info")
@@ -374,16 +384,7 @@ if label == '⚙️ Settings':
             st.session_state.workout = st.selectbox("Fitness experience level",
                                                      ("Beginner(1-6 months)", "Intermediate (6 - 12 months)",
                                                        "Advanced (over 12 months)"), index=0)
-            st.subheader("Meal Preference")
-            st.session_state.mealpref = st.multiselect("Any Cuisine Prefernce",["North Indian", "South Indian",
-    "East Indian", "West Indian", "Punjabi", "Bengali",  "Gujarati", "Rajasthani", "Maharashtrian",  "Kerala", "Tamil Nadu",
-    "Hyderabadi","Chinese",'Korean','Japanese', "Italian",  "Mediterranean",
-    "Thai",
-    "Mexican", "French",
-    "Spanish",
-    "Vietnamese",
-    "Middle Eastern",
-    "Korean"])
+           
         
         if st.button("Save changes"):
             st.success("Changes saved and updated")
