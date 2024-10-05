@@ -366,8 +366,7 @@ if label == '⚙️ Settings':
     "Gout",
     "Osteoporosis",
     "Celiac Disease (symptom management)",
-    "Diverticulitis",['None']
-],'None')
+    "Diverticulitis",'None'],['None'])
             st.subheader("Exercise Info")
             st.session_state.physical_restric = st.multiselect("Physical restrictions or injuries (if any)",
                                                               ["Back Issues", "Knee Problems", "Shoulder Pain","Shoulder Problems" ,
