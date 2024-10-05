@@ -257,6 +257,8 @@ if 'email' not in st.session_state:
    st.session_state.email = None
 if "password" not in st.session_state:
    st.session_state.password = None
+if "disease' not in st.session_state :
+    st.session_state.disease = None
 def translate_role_for_streamlit(user_role):
          if user_role == "model":
           return "assistant"
@@ -351,7 +353,21 @@ if label == '⚙️ Settings':
             st.session_state.aller = st.multiselect("Allergies (if any)",
                                                    ["Peanuts", "Dairy", "Gluten", "Soy", "Shellfish", "None"])
             st.session_state.meal_restrict = st.multiselect("Dietary restrictions (if any)",
-                                                          ["Vegan", "Vegetarian", "Pescatarian", "Keto", "Paleo","No Restriction" ],["No Restriction" ])
+                                                          ["Vegan", "Vegetarian", "Pescatarian", "Keto", "Paleo","No Restriction" ], [st.session_state.meal_restrict])
+            st.session_state.disease = st.multiselect('Any conditions/disease',[
+    "Type 2 Diabetes",
+    "Acid Reflux (GERD)",
+    "Hypertension (High Blood Pressure)",
+    "Hyperlipidemia (High Cholesterol)",
+    "Obesity",
+    "Metabolic Syndrome",
+    "Non-Alcoholic Fatty Liver Disease (NAFLD)",
+    "Irritable Bowel Syndrome (IBS)",
+    "Gout",
+    "Osteoporosis",
+    "Celiac Disease (symptom management)",
+    "Diverticulitis",['None']
+],'None')
             st.subheader("Exercise Info")
             st.session_state.physical_restric = st.multiselect("Physical restrictions or injuries (if any)",
                                                               ["Back Issues", "Knee Problems", "Shoulder Pain","Shoulder Problems" ,
@@ -359,6 +375,16 @@ if label == '⚙️ Settings':
             st.session_state.workout = st.selectbox("Fitness experience level",
                                                      ("Beginner(1-6 months)", "Intermediate (6 - 12 months)",
                                                        "Advanced (over 12 months)"), index=0)
+           st.subheader("Meal Preference")
+           st.session_state.mealpref = st.multiselect("Any Cuisine Prefernce",["North Indian", "South Indian",
+    "East Indian", "West Indian", "Punjabi", "Bengali",  "Gujarati", "Rajasthani", "Maharashtrian",  "Kerala", "Tamil Nadu",
+    "Hyderabadi","Chinese",'Korean','Japanese', "Italian",  "Mediterranean",
+    "Thai",
+    "Mexican", "French",
+    "Spanish",
+    "Vietnamese",
+    "Middle Eastern",
+    "Korean"]
         
         if st.button("Save changes"):
             st.success("Changes saved and updated")
