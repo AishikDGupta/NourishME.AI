@@ -384,7 +384,7 @@ if label == '⚙️ Settings':
     "Spanish",
     "Vietnamese",
     "Middle Eastern",
-    "Korean"]
+    "Korean"])
         
         if st.button("Save changes"):
             st.success("Changes saved and updated")
