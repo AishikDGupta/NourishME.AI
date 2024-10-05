@@ -353,7 +353,7 @@ if label == '⚙️ Settings':
     "Spanish",
     "Vietnamese",
     "Middle Eastern",
-    "Korean"])
+    "Korean"],['Italian','South Indian','Chinese',"Korean"])
 
         with col2:
             st.subheader("Health Info")
