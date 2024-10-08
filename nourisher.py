@@ -618,7 +618,7 @@ elif label == "🏠 Home":
                 
             st.session_state.chat_history2.append({"role": "assistant", "content": response.text})
             st.session_state.video_analyzed = True
-          with st.spinner(f"Analyzing posture in your {abc}"):
+           with st.spinner(f"Analyzing posture in your {abc}"):
               time.sleep(3)
     # Display chat history
       for message in st.session_state.chat_history2:
