@@ -259,6 +259,12 @@ if "password" not in st.session_state:
    st.session_state.password = None
 if "disease" not in st.session_state :
     st.session_state.disease = None
+if 'video_analyzed' not in st.session_state:
+    st.session_state.video_analyzed = False
+if 'chat_history2' not in st.session_state:
+    st.session_state.chat_history2 = []
+if 'chat_session2' not in st.session_state:
+    st.session_state.chat_session2 = None 
 def translate_role_for_streamlit(user_role):
          if user_role == "model":
           return "assistant"
