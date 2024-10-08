@@ -576,32 +576,37 @@ elif label == "🏠 Home":
                 if st.button("Add to Schedule"):
                  st.success("Changes saved and updated")
     elif choice == "Fitness pro 🏃‍♂️🧘‍♀️":
-     if 'video_analyzed' not in st.session_state:
-        st.session_state.video_analyzed = False
+     st.title("Fitness pro 🏃‍♂️🧘‍♀️")
 
-     abc = st.selectbox("what type of exercise are you doing ???", ["Push-ups", "Squats", "Lunges", 
-                                                                  "Deadlifts", "Plank", "Burpees", "Mountain Climbers", 
-                                                                  "Jumping Jacks", "Bicep Curls",
-                                                                  "Tricep Dips", "Russian Twists", "High Knees", 
-                                                                  "Box Jumps", "Pull-ups", "Glute Bridges"])
-     video_file = st.file_uploader("Upload a video file of your workout. This would give you feedback", type=['mp4', 'mov', 'avi'])
+# Create two columns
+     col1, col2 = st.columns([3, 1])
+
+     with col1:
+      abc = st.selectbox("What type of exercise are you doing?", [
+        "Push-ups", "Squats", "Lunges", "Deadlifts", "Plank", "Burpees", 
+        "Mountain Climbers", "Jumping Jacks", "Bicep Curls", "Tricep Dips", 
+        "Russian Twists", "High Knees", "Box Jumps", "Pull-ups", "Glute Bridges"
+    ])
+
+      video_file = st.file_uploader("Upload a video file of your workout. This would give you feedback", type=['mp4', 'mov', 'avi'])
     
-     if video_file is not None and not st.session_state.video_analyzed:
-        video_bytes = video_file.read()  
+      if video_file is not None and not st.session_state.video_analyzed:
+        video_bytes = video_file.read()
         st.video(video_bytes)
         
         prompt = f"""
-        Here's a concise, point-wise feedback on improving a squat:
-Knee Alignment: Ensure knees track over the toes without collapsing inward to avoid knee strain.
-Depth: Squat to at least parallel, with thighs level to the floor, maintaining a neutral spine.
-Foot Placement: Position feet slightly wider than shoulder-width, toes pointed slightly outward.
-Heel Stability: Keep heels grounded throughout the movement for better balance and power.
-You burnt about 150 calories doing this """
+        Here's a concise, point-wise feedback on improving a squat: 
+        Knee Alignment: Ensure knees track over the toes without collapsing inward to avoid knee strain. 
+        Depth: Squat to at least parallel, with thighs level to the floor, maintaining a neutral spine. 
+        Foot Placement: Position feet slightly wider than shoulder-width, toes pointed slightly outward. 
+        Heel Stability: Keep heels grounded throughout the movement for better balance and power. 
+        You burnt about 150 calories doing this
+        """
+        
         with st.spinner("Analyzing the video"):
             time.sleep(4)
-            response = st.session_state.chat_session2.send_message([f"""here is a sample of how you can answer {prompt}
-to any question , answer like that . suppose the user has selected {abc} . use common sense to identify where he might be wrong for example 
-use certain points unique to the exercise and point them out . dont write that **you dont know / you havent received the video**"""])
+            response = st.session_state.chat_session2.send_message([f"""here is a sample of how you can answer {prompt} to any question , answer like that . suppose the user has selected {abc} . use common sense to identify where he might be wrong for example  use certain points unique to the exercise and point them out . dont write that **you dont know / you havent received the video**"""])
+        
         st.session_state.chat_history2.append({"role": "assistant", "content": response.text})
         st.session_state.video_analyzed = True
     
@@ -610,7 +615,7 @@ use certain points unique to the exercise and point them out . dont write that *
             role = "assistant" if message["role"] == "model" else message["role"]
             st.chat_message(role).markdown(message["content"])
     
-     input = st.chat_input("ask any further doubts")
+     input = st.chat_input("Ask any further doubts")
      if input:
         st.chat_message("user").markdown(input)
         st.session_state.chat_history2.append({"role": "user", "content": input})
@@ -620,126 +625,16 @@ use certain points unique to the exercise and point them out . dont write that *
         st.chat_message("assistant").markdown(response2.text)
         st.session_state.chat_history2.append({"role": "assistant", "content": response2.text})
 
-    elif choice == "SmartBand ⌚️✨":
-      st.text_input("modelNo","NM.AI-x234frg")
-      st.button("connect to band")
-      y = 1
-      time.sleep(1.5)
-      if y == 1:
-        with st.spinner("connecting..."):
-                time.sleep(1) 
-        with st.spinner("fetching details..."):
-                 time.sleep(1) 
-        st.success("connected to your band")
-        tab1,tab2,tab3 = st.tabs(["Calories Burnt",'Body Health','Report  '])
-        with tab1:
-         a = st.selectbox("select your date",("Today",'last 24 hours','this week','this month'))
-         if a == "Today":
-             b = 200
-             c = 170
-             col1,col2,col3,col4 = st.columns(4)
-             col1.metric(f"Average of Calories Burnt {a}",b)
-             col2.metric(f"Average of Calories Consumed {a}",c)
-             col3.metric("Net Calorie Burnt",b-c)
-             col4.metric("Distance Walked", f"{412} m")
-         if a == 'last 24 hours':
-             b = 470
-             c = 600
-             col1,col2,col3,col4 = st.columns(4)
-             col1.metric(f"Average of Calories Burnt {a}",b)
-             col2.metric(f"Average of Calories Consumed {a}",c)
-             col3.metric("Net Calorie gain",b-c)
-             col4.metric("Distance Walked",f"{712} m")
-         if a == 'this week':
-             b = 907
-             c = 500 
-             col1,col2,col3,col4 = st.columns(4)
-             col1.metric(f"Average of Calories Burnt {a}",b)
-             col2.metric(f"Average of Calories Consumed {a}",c)
-             col3.metric("Net Calorie ",b-c)
-             col4.metric("Average Distance Walked", f"{784} m")
-         if a == 'this month':
-             b = 678
-             c = 600 
-             col1,col2,col3,col4 = st.columns(4)
-             col1.metric(f"Average of Calories Burnt {a}",b)
-             col2.metric(f"Average of Calories Consumed {a}",c)
-             col3.metric("Net Calorie gain",b-c) 
-             col4.metric("Average Distance Walked", f"{1023} m")
-         y = 0           
-        with tab2:
-           col1,col2,col3 = st.columns(3)
-           j = random.randint(35,39)
-           k = random.randint(95,98)
-           with col1:
-            st.metric(f"Average Current Heart Rate ❤️",'60 - 100')
-           with col2:
-              st.metric(f'Average Body Temperature','37°C')
-           with col3:
-              st.metric(f"Average SpO2 rate",'95 - 100%')
-           while True:
-            with col1:
-             placeholder1 = st.empty()
-             k =  random.randint(-15, 15)/5
-             placeholder1.metric("Your Current Heart Rate ❤️", f"{85 + k}")
-            with col2:
-              placeholder2 = st.empty()
-              placeholder2.metric("Your Body Temperature", f"{37 + random.randint(-5, 5)/10}°C")
-            with col3:
-             placeholder3 = st.empty()
-             placeholder3.metric("Your Current SpO2 rate", f"{97 + random.randint(-20, 15)/5}%")
-    
-             time.sleep(3)
-    
-            placeholder1.empty()
-            placeholder2.empty()
-            placeholder3.empty()
-        with tab3:
-            abc = st.selectbox("select your date",("Today",'last 24 hours','this week','this month'))
-            placeholder5 = st.empty()
-            if abc == "Today":
-                placeholder5.metric("Average distance Walked", f"{0.41} km")
-            if abc == "last 24 hours":
-                placeholder5.metric("Average distance Walked", f"{1.78} km")
-            if abc == "this week":
-                placeholder5.metric("Average distance Walked", f"{1.12} km")
-            if abc == "this month":
-                placeholder5.metric("Average distance Walked", f"{1.46} km")
-    elif choice == "Food Label Analysis 🍞🧾 ":
-        st.subheader("Label Reader")
-        image = st.file_uploader("upload an image of your food",type=["jpg", "jpeg", "png", "gif"])
-        if image is not None:
-         img = Image.open(image) 
-         st.image(img)
-         with st.spinner("reading the label"):
-          time.sleep(2)
-         with st.spinner("finding the nutritional content"):
-                ab = model.generate_content([f"""From the image given , see all the nutritional information
-                                             give like amount of sugar , additives etc and also fats , 
-                                             carbs , proteins , cals etc""",img])
-                stoggle(
-    "Nutritional Information",
-    ab.text,
-)        
-         with st.spinner("finding additives"):
-                abc = model.generate_content([f"""You have been given an image of the food label . from this give 
-                                              the additives present . if it isnt given , give a few random chemicals and 
-                                              content""",img])
-                stoggle(
-    "Additives",
-    abc.text,
-)
-         with st.spinner("Providing Personalized Suggestions"):
-                abd = model.generate_content([f"""Explain whether the person should eat this food or not , 
-                                              the person
-                                            's goal is {st.session_state.goalof} and he 
-                                            has allergies AND restrictions {st.session_state.aller} and
-                                              {st.session_state.meal_restrict
-} if the food contains things which are bad for the user , just say that it shouldnt be eaten by them . **write in bold** """,img])
-                stoggle(
-    "Whether You should eat this ??",
-    abd.text,
-) 
+     with col2:
+      st.subheader("Chat History")
+      for message in st.session_state.chat_history2:
+        role = "You" if message["role"] == "user" else "Fitness Pro"
+        st.markdown(f"**{role}:** {message['content'][:50]}...")
+
+      if st.button("Start New Chat"):
+        st.session_state.video_analyzed = False
+        st.session_state.chat_history2 = []
+        st.experimental_rerun()
     elif choice == "Chat with personal chatbot 💬":
         st.subheader("Personal Health Assistant")
         input = st.chat_input("Ask me anything about health and nutrition!")  
