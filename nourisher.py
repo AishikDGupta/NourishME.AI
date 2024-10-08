@@ -585,7 +585,7 @@ elif label == "🏠 Home":
      st.title("Fitness pro 🏃‍♂️🧘‍♀️")
 
 # Create two columns
-     col1, col2 = st.columns([3, 1])
+     col1, col2 = st.columns([5, 1])
 
      with col1:
       abc = st.selectbox("What type of exercise are you doing?", [
