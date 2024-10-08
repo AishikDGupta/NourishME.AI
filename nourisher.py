@@ -647,7 +647,7 @@ elif label == "🏠 Home":
         with st.spinner("fetching details..."):
                  time.sleep(1) 
         st.success("connected to your band")
-        tab1,tab2,tab3 = st.tabs(["Calories Burnt",'Body Health','Report  '])
+        tab1,tab2 = st.tabs(["Calories Burnt",'Body Health'])
         with tab1:
          a = st.selectbox("select your date",("Today",'last 24 hours','this week','this month'))
          if a == "Today":
