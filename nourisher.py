@@ -345,6 +345,9 @@ if label == '⚙️ Settings':
             st.session_state.age = present_date.year - st.session_state.birth_date.year - ((present_date.month, present_date.day) < (st.session_state.birth_date.month, st.session_state.birth_date.day))
             st.session_state.height = st.text_input("your height","172 cm")
             st.session_state.weight = st.text_input("your weight","58 kg")
+            st.selectbox("Your Language",['english', 'हिंदी', 'বাংলা', 'తెలుగు', 'मराठी', 'தமிழ்', 'ఉర్దూ', 'ગુજરાતી', 'ಕನ್ನಡ', 'മലയാളം', 'ਪੰਜਾਬੀ', 'ଓଡିଆ', 'অসমীয়া', 'संस्कृत', 'सिंधी', 'कोकणी',
+ 'español', 'français', 'deutsch', '中文', '日本語', 'русский', 'português', 'italiano', '한국어', 'العربية']
+)
             st.session_state.mealpref = st.multiselect("Any Cuisine Prefernce",["North Indian", "South Indian",
     "East Indian", "West Indian", "Punjabi", "Bengali",  "Gujarati", "Rajasthani", "Maharashtrian",  "Kerala", "Tamil Nadu",
     "Hyderabadi","Chinese",'Korean','Japanese', "Italian",  "Mediterranean",
