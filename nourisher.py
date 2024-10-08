@@ -636,7 +636,7 @@ elif label == "🏠 Home":
             
         st.chat_message("assistant").markdown(response2.text)
         st.session_state.chat_history2.append({"role": "assistant", "content": response2.text})    
-     with col2 :
+      with col2 :
         st.subheader("Chat History")
         st.write("THIS MONTH")
         st.write("Deadlifts on 5th..")
