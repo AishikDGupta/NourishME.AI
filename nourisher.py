@@ -631,7 +631,7 @@ elif label == "🏠 Home":
             
         st.chat_message("assistant").markdown(response2.text)
         st.session_state.chat_history2.append({"role": "assistant", "content": response2.text})
-        if st.button("Clear Chat"):
+     if st.button("Clear Chat"):
          st.session_state.chat_history2 = []
          st.session_state.video_analyzed = False
          st.experimental_rerun()          
