@@ -623,7 +623,7 @@ elif label == "🏠 Home":
         role = "assistant" if message["role"] == "model" else message["role"]
         st.chat_message(role).markdown(message["content"])
       if st.session_state.video_analyzed:
-       if st.button("Clear Chat"):
+       if st.button("Start New Chat"):
          st.session_state.chat_history2 = []
          st.session_state.video_analyzed = False
          st.experimental_rerun()   
