@@ -635,11 +635,7 @@ elif label == "🏠 Home":
             response2 = st.session_state.chat_session2.send_message([input])
             
         st.chat_message("assistant").markdown(response2.text)
-        st.session_state.chat_history2.append({"role": "assistant", "content": response2.text})
-      if st.button("Clear Chat"):
-         st.session_state.chat_history2 = []
-         st.session_state.video_analyzed = False
-         st.experimental_rerun()          
+        st.session_state.chat_history2.append({"role": "assistant", "content": response2.text})          
     elif choice == "SmartBand ⌚️✨":
       st.text_input("modelNo","NM.AI-x234frg")
       st.button("connect to band")
