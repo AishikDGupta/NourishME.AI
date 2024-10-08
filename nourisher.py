@@ -586,7 +586,7 @@ elif label == "🏠 Home":
                        "Bicep Curls", "Tricep Dips", 
                        "Russian Twists", "High Knees",
                        "Box Jumps", "Pull-ups", "Glute Bridges"])
-    
+    col1,col2 = st.columns([4,1])
     # Video upload section
       if 'video_analyzed' not in st.session_state:
         st.session_state.video_analyzed = False
@@ -636,6 +636,14 @@ elif label == "🏠 Home":
             
         st.chat_message("assistant").markdown(response2.text)
         st.session_state.chat_history2.append({"role": "assistant", "content": response2.text})    
+     with col2 :
+        st.subheader("Chat History")
+        st.write("THIS MONTH")
+        st.write("Deadlifts on 5th..")
+        st.write("Squats on 4th.")
+        st.write("Pushups on 3rd")
+        st.write("Bicep Curls on 2nd")
+        st.write("Bicep Curls on 1st")
 
     elif choice == "SmartBand ⌚️✨":
       st.text_input("modelNo","NM.AI-x234frg")
