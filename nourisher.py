@@ -586,7 +586,7 @@ elif label == "🏠 Home":
                        "Bicep Curls", "Tricep Dips", 
                        "Russian Twists", "High Knees",
                        "Box Jumps", "Pull-ups", "Glute Bridges"])
-    col1,col2 = st.columns([4,1])
+      col1,col2 = st.columns([4,1])
     # Video upload section
       if 'video_analyzed' not in st.session_state:
         st.session_state.video_analyzed = False
