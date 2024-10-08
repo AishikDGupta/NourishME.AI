@@ -623,8 +623,6 @@ elif label == "🏠 Home":
       for message in st.session_state.chat_history2:
         role = "assistant" if message["role"] == "model" else message["role"]
         st.chat_message(role).markdown(message["content"])
-    
-    # Chat input section
       input = st.chat_input("ask any further doubts")
       if input:
         st.chat_message("user").markdown(input)
@@ -635,6 +633,9 @@ elif label == "🏠 Home":
             
         st.chat_message("assistant").markdown(response2.text)
         st.session_state.chat_history2.append({"role": "assistant", "content": response2.text})
+    if st.button("Start New Chat") :
+        st.session_state.video_analyzed = False
+        st.session_state.chat_history2 = []
     elif choice == "SmartBand ⌚️✨":
       st.text_input("modelNo","NM.AI-x234frg")
       st.button("connect to band")
