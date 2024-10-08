@@ -622,7 +622,7 @@ elif label == "🏠 Home":
             st.chat_message(role).markdown(message["content"])
     
      input = st.chat_input("Ask any further doubts")
-     if input:
+      if input:
         st.chat_message("user").markdown(input)
         st.session_state.chat_history2.append({"role": "user", "content": input})
         with st.spinner("Analyzing questions"):
