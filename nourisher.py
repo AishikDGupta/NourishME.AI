@@ -579,8 +579,6 @@ elif label == "🏠 Home":
                 if st.button("Add to Schedule"):
                  st.success("Changes saved and updated")
     elif choice == "Fitness pro 🏃‍♂️🧘‍♀️":
-     col1 , col2 = st.columns([5,1])   
-     with col1:
       abc = st.selectbox("what type of exercise are you doing ???", 
                        ["Push-ups", "Squats", "Lunges", 
                        "Deadlifts", "Plank", "Burpees", 
