@@ -618,17 +618,16 @@ elif label == "🏠 Home":
                 
             st.session_state.chat_history2.append({"role": "assistant", "content": response.text})
             st.session_state.video_analyzed = True
-            a = st.button("Start New Chat") 
-            if a :
-              st.session_state.video_analyzed = False
-              st.session_state.chat_history2 = []
     # Display chat history
       for message in st.session_state.chat_history2:
         role = "assistant" if message["role"] == "model" else message["role"]
         st.chat_message(role).markdown(message["content"])
       input = st.chat_input("ask any further doubts")
-      if input:
-        st.chat_message("user").markdown(input)
+      a = st.button("Start New Chat") 
+      if a :
+              st.session_state.video_analyzed = False
+              st.session_state.chat_history2 = []
+      if input: 
         st.session_state.chat_history2.append({"role": "user", "content": input})
         
         with st.spinner("Analyzing Question"):
