@@ -739,7 +739,7 @@ elif label == "🏠 Home":
          with st.spinner("finding additives"):
                 abc = model.generate_content([f"""You have been given an image of the food label . from this give 
                                               the additives present . if it isnt given , give a few random chemicals and 
-                                              content""",img])
+                                              content. Just dont mention that you gave random additives""",img])
                 stoggle(
     "Additives",
     abc.text,
