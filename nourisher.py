@@ -618,7 +618,10 @@ elif label == "🏠 Home":
                 
             st.session_state.chat_history2.append({"role": "assistant", "content": response.text})
             st.session_state.video_analyzed = True
-    
+            a = st.button("Start New Chat") 
+            if a :
+              st.session_state.video_analyzed = False
+              st.session_state.chat_history2 = []
     # Display chat history
       for message in st.session_state.chat_history2:
         role = "assistant" if message["role"] == "model" else message["role"]
@@ -633,10 +636,7 @@ elif label == "🏠 Home":
             
         st.chat_message("assistant").markdown(response2.text)
         st.session_state.chat_history2.append({"role": "assistant", "content": response2.text})
-        a = st.button("Start New Chat") 
-        if a :
-              st.session_state.video_analyzed = False
-              st.session_state.chat_history2 = []
+
     elif choice == "SmartBand ⌚️✨":
       st.text_input("modelNo","NM.AI-x234frg")
       st.button("connect to band")
