@@ -576,8 +576,6 @@ elif label == "🏠 Home":
                 if st.button("Add to Schedule"):
                  st.success("Changes saved and updated")
     elif choice == "Fitness pro 🏃‍♂️🧘‍♀️":
-     col1, col2 = st.columns([5, 1])
-     with col1 :
       abc = st.selectbox("what type of exercise are you doing ???", 
                        ["Push-ups", "Squats", "Lunges", 
                        "Deadlifts", "Plank", "Burpees", 
@@ -634,14 +632,6 @@ elif label == "🏠 Home":
             
         st.chat_message("assistant").markdown(response2.text)
         st.session_state.chat_history2.append({"role": "assistant", "content": response2.text})
-     with col2:
-        st.subheader("Chat History")
-        st.write("THIS MONTH")
-        st.write("Deadlifts on 5th..")
-        st.write("Squats on 4th.")
-        st.write("Pushups on 3rd")
-        st.write("Bicep Curls on 2nd")
-        st.write("Bicep Curls on 1st")
     elif choice == "SmartBand ⌚️✨":
       st.text_input("modelNo","NM.AI-x234frg")
       st.button("connect to band")
