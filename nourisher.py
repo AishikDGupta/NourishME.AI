@@ -386,7 +386,7 @@ if label == '⚙️ Settings':
          st.write("Unlimited Chats ❌")
          st.write("Personalized Suggestions ❌")
          st.write("Connect with SmartBand ❌")
-         st.write("Live Workout Tracking ❌")
+         st.write("Live Workout Tracking (1 Upload/day)")
 
 
        with col2 :
@@ -399,7 +399,7 @@ if label == '⚙️ Settings':
          st.write("Personalized Suggestions ✔️")
          st.write("Connect with SmartBand ✔️")
          st.write("Personalized AI Chatbot ✔️")
-         st.write("Live Workout Tracking ❌")
+         st.write("Live Workout Tracking (5 Uploads/day)")
          st.write("Notifications ❌")
         bcdv = st.button("Buy Now ")
         if bcdv :
@@ -414,7 +414,7 @@ if label == '⚙️ Settings':
          st.write("Label Reader ✔️")
          st.write("Personalized Suggestions ✔️")
          st.write("Connect with SmartBand ✔️")
-         st.write("Live Workout Tracking ✔️")
+         st.write(" Unlimited Live Workout Tracking ✔️")
          st.write("Personalized AI Chatbot ✔️")
          st.write("Notifications ✔️")
          st.write("Early Access ✔️")
